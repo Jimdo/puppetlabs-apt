@@ -18,6 +18,12 @@ define apt::source(
   include apt::params
   include apt::update
 
+  if is_hash($apt::params::mirror_location) and has_key($apt::params::mirror_location, $location) {
+    $real_location = $apt::params::mirror_location[$location]
+  } else {
+    $real_location = $location
+  }
+
   $sources_list_d = $apt::params::sources_list_d
   $provider       = $apt::params::provider
 
@@ -44,7 +50,7 @@ define apt::source(
 
   if ($pin != false) {
     # Get the host portion out of the url so we can pin to origin
-    $url_split = split($location, '/')
+    $url_split = split($real_location, '/')
     $host      = $url_split[2]
 
     apt::pin { $name:

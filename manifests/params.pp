@@ -1,4 +1,6 @@
-class apt::params {
+class apt::params (
+  $mirror_location = undef
+  ) {
   $root           = '/etc/apt'
   $provider       = '/usr/bin/apt-get'
   $sources_list_d = "${root}/sources.list.d"

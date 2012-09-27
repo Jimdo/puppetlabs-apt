@@ -148,6 +148,43 @@ describe 'apt::source', :type => :define do
       }
     end
   end
+
+  describe "with own mirror" do
+    let (:facts) { { :lsbdistcodename => 'lucid' } }
+    let (:params) { {
+      :location => 'http://ftp.uk.debian.org'
+    } }
+    let :pre_condition do
+      'class {"apt::params": mirror_location => { "http://ftp.uk.debian.org" => "http://debmirror.fqdn/ftp.uk.debian.org" } }'
+    end
+    it {
+      should contain_file("#{title}.list")\
+        .with_content(%r{debmirror\.fqdn/ftp\.uk\.debian\.org})
+    }
+    it {
+      should_not contain_file("#{title}.list")\
+        .with_content(%r{\ ftp\.uk\.debian\.org})
+    }
+  end
+
+  describe "with multiple own mirrors" do
+    let (:facts) { { :lsbdistcodename => 'lucid' } }
+    let (:params) { {
+      :location => 'http://ftp.uk.debian.org'
+    } }
+    let :pre_condition do
+      'class {"apt::params": mirror_location => { "http://ftp.uk.debian.org" => "http://debmirror.fqdn/ftp.uk.debian.org", "apt.puppetlabs.org" => "http://debmirror.fqdn/apt.puppetlabs.org" } }'
+    end
+    it {
+      should contain_file("#{title}.list")\
+        .with_content(%r{debmirror\.fqdn/ftp\.uk\.debian\.org})
+    }
+    it {
+      should_not contain_file("#{title}.list")\
+        .with_content(%r{\ ftp\.uk\.debian\.org})
+    }
+  end
+
   describe "without release should raise a Puppet::Error" do
     let(:default_params) { Hash.new }
     let(:facts) { Hash.new }

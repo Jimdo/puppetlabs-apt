@@ -73,6 +73,16 @@ apt::key { "jenkins":
 
 Note that use of the "key_source" parameter requires wget to be installed and working.
 
+### apt::params
+Sets default parameters which will be used within class.
+You can use it to override repository locations if you have own mirrors for example.
+Instantiate this before you use any apt resources in puppet.
+<pre>
+class { "apt::params":
+    mirror_location => { "http://debian.mirror.iweb.ca/debian/" => "http://myownmirror.fqdn/debian_mirror_iweb_ca",
+                         "http://ftp.uk.debian.org" => "http://myownmirror.fqdn/ftp_uk_debian_org" }
+}
+</pre>
 
 ## Contributors
 A lot of great people have contributed to this module. A somewhat current list follows.  
