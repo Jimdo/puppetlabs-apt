@@ -83,6 +83,13 @@ class { "apt::params":
                          "http://ftp.uk.debian.org" => "http://myownmirror.fqdn/ftp_uk_debian_org" }
 }
 </pre>
+You can also set up the apt module whether to use sources from your mirror or public mirror.
+To rewrite deb-src to your own mirror instantiate apt::params with:
+<pre>
+class { "apt::params":
+    rewrite_source_mirror => true
+}
+</pre>
 
 ## Contributors
 A lot of great people have contributed to this module. A somewhat current list follows.  

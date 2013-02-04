@@ -167,6 +167,26 @@ describe 'apt::source', :type => :define do
     }
   end
 
+  describe "with own mirror not mirroring source files" do
+    let (:facts) { { :lsbdistcodename => 'lucid' } }
+    let (:params) { {
+      :location => 'http://ftp.uk.debian.org'
+    } }
+    let :pre_condition do
+      'class {"apt::params": mirror_location => { "http://ftp.uk.debian.org" => "http://debmirror.fqdn/ftp.uk.debian.org" }, rewrite_source_mirror => false }'
+    end
+    it {
+      should contain_file("#{title}.list")\
+        .with_content(%r{^deb http://debmirror\.fqdn/ftp\.uk\.debian\.org}) \
+        .with_content(%r{^deb-src http://ftp\.uk\.debian\.org})
+    }
+    it {
+      should_not contain_file("#{title}.list")\
+        .with_content(%r{^deb http://ftp\.uk\.debian\.org}) \
+        .with_content(%r{^deb-src http://debmirror.\.fqdn/ftp\.uk\.debian\.org})
+    }
+  end
+
   describe "with multiple own mirrors" do
     let (:facts) { { :lsbdistcodename => 'lucid' } }
     let (:params) { {

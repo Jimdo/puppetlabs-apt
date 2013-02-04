@@ -1,5 +1,5 @@
 # <%= name %>
 deb <%= real_location %> <%= release_real %> <%= repos %>
 <%- if include_src then -%>
-deb-src <%= real_location %> <%= release_real %> <%= repos %>
+deb-src <%= scope.lookupvar('apt::params::rewrite_source_mirror') == "true" ? real_location : location %> <%= release_real %> <%= repos %>
 <%- end -%>

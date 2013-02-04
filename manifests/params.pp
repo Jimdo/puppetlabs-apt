@@ -1,5 +1,6 @@
 class apt::params (
-  $mirror_location = undef
+  $mirror_location = undef,
+  $rewrite_source_mirror = false
   ) {
   $root           = '/etc/apt'
   $provider       = '/usr/bin/apt-get'
