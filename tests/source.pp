@@ -16,7 +16,7 @@ apt::source { 'debian_testing':
   release    => 'testing',
   repos      => 'main contrib non-free',
   key        => '55BE302B',
-  key_server => 'subkeys.pgp.net',
+  key_server => 'keyserver.ubuntu.com',
   pin        => '-10',
 }
 apt::source { 'debian_unstable':
@@ -24,6 +24,6 @@ apt::source { 'debian_unstable':
   release    => 'unstable',
   repos      => 'main contrib non-free',
   key        => '55BE302B',
-  key_server => 'subkeys.pgp.net',
+  key_server => 'keyserver.ubuntu.com',
   pin        => '-10',
 }

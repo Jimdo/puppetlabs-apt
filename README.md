@@ -50,7 +50,7 @@ apt::source { "debian_unstable":
   repos             => "main contrib non-free",
   required_packages => "debian-keyring debian-archive-keyring",
   key               => "55BE302B",
-  key_server        => "subkeys.pgp.net",
+  key_server        => "keyserver.ubuntu.com",
   pin               => "-10",
   include_src       => true
 }
